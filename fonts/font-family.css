@@ -1,0 +1,12 @@
+@charset "utf-8";
+@font-face {
+    font-family: 'Kristen';
+    src:url('/college/fonts/kristen/kristen.ttf') format('truetype'),
+		url('/college/fonts/kristen/kristen.eot') format('embedded-opentype'),
+		url('/college/fonts/kristen/kristen.eot?#iefix') format('embedded-opentype'),
+		url('/college/fonts/kristen/kristen.woff2') format('woff2'),
+		url('/college/fonts/kristen/kristen.woff') format('woff'),
+		url('/college/fonts/kristen/kristen.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
