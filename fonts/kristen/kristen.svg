@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg">
+<!DOCTYPE svg  PUBLIC '-//W3C//DTD SVG 1.1//EN'  'https://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+<svg version="1.1" xmlns="https://www.w3.org/2000/svg">
 <defs>
 <font id="KristenITC-Regular" horiz-adv-x="1126">
 <font-face font-family="Kristen ITC" font-stretch="semi-expanded" font-weight="400" ascent="1638" bbox="-391 -680 2222 2091" cap-height="1591" descent="-410" panose-1="3 5 5 2 4 2 2 3 2 2" underline-position="-352" underline-thickness="175" unicode-range="U+0020-2044" units-per-em="2048" x-height="1311"/>
