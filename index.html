@@ -3,6 +3,77 @@
 <head>
 <meta charset="utf-8">
 <title>TMORLEY | College Student</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.js"></script>
+<script>
+var cLog = (x) => {
+	return console.log(x)
+}
+var multiTag = (num,par,kid) => {
+	for (let i=0; i<num; i++) {
+		$(par).append(kid);
+	};
+};
+$(() => {
+	/*$('input').keypress(() => {
+		
+	});*/
+ $.ajaxSetup({ cache: false });
+ $('#search').keyup(() => {
+  $('article').html('');
+  $('#state').val('');
+  var searchField = $('#search').val();
+  var expression = new RegExp(searchField, "i");
+  $.getJSON('../data/inits.json', (data) => {
+   $.each(data, (k, v) => {
+    if (v.name.search(expression) != -1 || v.location.search(expression) != -1)
+    {
+     $('article').append('<li class="list-group-item link-class"><img src="'+v.image+'" height="40" width="40" class="img-thumbnail" /> '+v.name+' | <span class="text-muted">'+v.location+'</span></li>');
+    }
+   });   
+  });
+ });
+ 
+ $('article').on('click', 'li', (i,el) => {
+  var click_text = $(el).text().split('|');
+  $('#search').val($.trim(click_text[0]));
+  $('article').html('');
+ });
+});
+</script>
+<style>
+dw-container-div {display:none}
+body, main, main * {
+	display:grid;
+	padding:0;
+	margin:0;
+}
+body {
+	display:grid;
+	justify-content:stretch;
+	height:100vh;
+	background:blue;
+}
+main {
+	display:grid;
+	place-content:space-around;
+	background:red;
+}
+form {
+	display:grid;
+	width:100%;
+}
+#search {
+	font:3em 'Calibri';
+	width:8em;
+}
+</style>
 </head>
-<body>test</body>
+<body>
+	<main>
+		<form action="">
+			<input type="search" id="search" />
+			<article></article>
+		</form>
+	</main>
+</body>
 </html>

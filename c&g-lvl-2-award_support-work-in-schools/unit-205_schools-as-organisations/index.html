@@ -68,6 +68,15 @@
 		ul li::before {
 			content:'\25AA';
 		}
+		[data-subTitle] {
+			grid:auto/auto 1fr;
+		}
+		[data-subTitle]::before {
+			content:attr(data-subTitle);
+			display:inline-flex;
+			grid-column:1/2;
+			background:#F0F url('data:image/svg+xml,<%3Fxml version="1.0" encoding="UTF-8" standalone="no"%3F><!-- Created with Inkscape (http://www.inkscape.org/) --><svg version="1.1" id="svg1" width="100%" preserveAspectRatio="xMinYMin meet" viewBox="0 0 690 160" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><defs id="defs1" /><g id="g1"><path style="display:inline;opacity:1;fill:%23196b24;fill-opacity:1;stroke-width:11.7808;stroke-dasharray:4.79244, 2.39622, 1.19811, 2.39622" d="M 11.432184,14 689.92986,33.692544 661.64421,159.00874 33.273006,133.58745 Z" id="path2" /><path style="display:inline;opacity:1;fill:%23156082;fill-opacity:1;stroke-width:11.7808;stroke-dasharray:4.79244, 2.39622, 1.19811, 2.39622" d="M 0,0 678.49766,19.692544 650.21201,145.00874 21.840822,119.58745 Z" id="path1" /></g></svg>') no-repeat;
+		}
 		@media print {
 			body, main {
 				display:block;
@@ -90,50 +99,89 @@
 			}
 		}
 	</style>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.js"></script>
-	<script>
-		$(() => {
-			$('nav[data-grid]').each((i,el) => {
-				xNum = $(el).children().length;
-				$(el).css('grid', 'auto/repeat('+xNum+', '+'auto) 1fr');
-			});
-			var capFirst = (str) => {
-				return str.charAt(0).toUpperCase()+str.slice(1);
-			}
-			var units = {
-				'201':'Child and young person development',
-				'202':'Safeguarding the welfare of children and young people',
-				'203':'Communication and professional relationships with children, young people and adults',
-				'204':'Equality, diversity and inclusion in work with children and young people',
-				'205':'Schools as organisations'
-			}
-			var sections = [
-				'different types of schools',
-				'roles and responsibilities',
-				'upholding aims and values',
-				'laws and codes of practice',
-				'policies and procedures',
-				'schools in wider context'
-			];
-			var unitNum = $('title').attr('id');
-			$.each(units, (k,v)=> {
-				$('title#'+k).append(k+' - '+v);
-			});
-			$('h1').each((i,el)=> {
-				var h1Cont = {'sup':'unit','big':'main'};
-				$.each(h1Cont, (k,v)=> {
-					$(k+' img',el).attr('src','title_'+v+'.svg')
-					
-				});
-			});
-			console.log(capFirst('ssdsdfeef'))
-			$.each(sections, (i,el) => {
-				el = (i+1)+'. '+capFirst(el);
-				$('#toc').append('<li>'+el+'</li>');
-				$('section > h2')[i].append(el);
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.js"></script>
+<script>
+var cLog = (x) => {
+	return console.log(x)
+}
+var multiTag = (num,par,kid) => {
+	for (let i=0; i<num; i++) {
+		$(par).append(kid);
+	};
+};
+$(() => {
+	$('nav[data-grid]').each((i,el) => {
+		xNum = $(el).children().length;
+		$(el).css('grid', 'auto/repeat('+xNum+', '+'auto) 1fr');
+	});
+	var capFirst = (str) => {
+		return str.charAt(0).toUpperCase()+str.slice(1);
+	}
+	var units = {
+		'201':'Child and young person development',
+		'202':'Safeguarding the welfare of children and young people',
+		'203':'Communication and professional relationships with children, young people and adults',
+		'204':'Equality, diversity and inclusion in work with children and young people',
+		'205':'Schools as organisations'
+	}
+	var sections = [
+		'Different types of schools',
+		'Roles and responsibilities',
+		'Upholding aims and values',
+		'Laws and codes of practice',
+		'Policies and procedures',
+		'Schools in wider context'
+	];
+	var schoolTypes = {
+		'Early Years': [
+			'Montessori',
+			'Reggio Emilia',
+			'Forest schools',
+			'Outdoor nurseries',
+			'The Curiosity Approach',
+			'Steiner nurseries (Steiner Waldorf)',
+			'Froebelian nurseries',
+			'Bilingual nurseries'
+		],
+		'Primary_Secondary Schools': [
+			'State schools',
+			'Faith schools',
+			'Free schools',
+			'Academies',
+			'City technology colleges',
+			'State boarding schools',
+			'Private schools'
+		]
+	}
+	var unitNum = $('title').attr('id');
+	$.each(units, (k,v)=> {
+		$('title#'+k).append(k+' - '+v);
+	});
+	$('h1').each((i,el)=> {
+		var h1Cont = {'sup':'unit','big':'main'};
+		$.each(h1Cont, (k,v)=> {
+			$(k+' img',el).attr('src','title_'+v+'.svg')
+
+		});
+	});
+	$.each(sections, (i,el) => {
+		el = (i+1)+'. '+el;
+		$('article').each((j,ele) => {
+			$('#toc',ele).append('<li>'+el);
+			$(ele).append('<section><h2>'+el);
+		});
+	});
+	$.each(schoolTypes, (k,v) => {
+		$('#toc + section').each(function(i) {
+			$(this).append('<div><h3 id="test">'+k+'</h3>');
+			cLog(v);
+			$(k).each(function() {
+				$('#test').after('<h4>'+this+'</h4>');
 			});
 		});
-	</script>
+	});
+});
+</script>
 </head>
 <body>
 	<main>
@@ -154,33 +202,8 @@
 			<a href="">Schools as Organisations</a>
 		</nav>
 		<article>
-			<ol id="toc">
-			</ol>
-			<section>
-				<h2></h2>
-				<ul>
-					<li>State schools</li>
-					<li>Faith schools</li>
-					<li>Free schools</li>
-					<li>Academies</li>
-					<li>City technology colleges</li>
-					<li>State boarding schools</li>
-					<li>Private schools</li>
-				</ul>
-			</section>
-			<section>
-				<h2></h2>
-			</section>
-			<section>
-				<h2></h2>
-			</section>
-			<section>
-				<h2></h2>
-			</section>
-			<section>
-				<h2></h2>
-			</section>
-			<section>
+			<nav id="toc"></nav>
+			<!--<section>
 				<h2></h2>
 				<div>
 					<h3>What is 'the wider context'?</h3>
@@ -227,10 +250,10 @@
 					<label for="aDate">Date:</label>
 					<input id="aDate" type="text">
 				</td>
-			</form>
+			</form>-->
 		</article>
 		<footer>
-			<img src="city-guilds-logo.svg" alt="City & Guilds Logo" />
+			<!--<img src="city-guilds-logo.svg" alt="City & Guilds Logo" />-->
 		</footer>
 	</main>
 </body>
