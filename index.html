@@ -17,21 +17,36 @@ $(() => {
 	/*$('input').keypress(() => {
 		
 	});*/
- $.ajaxSetup({ cache: false });
- $('#search').keyup(() => {
+$.ajaxSetup({ cache: false });
+$('#search').keyup(() => {
   $('article').html('');
-  $('#state').val('');
   var searchField = $('#search').val();
   var expression = new RegExp(searchField, "i");
-  $.getJSON('../data/inits.json', (data) => {
-   $.each(data, (k, v) => {
-    if (v.name.search(expression) != -1 || v.location.search(expression) != -1)
-    {
-     $('article').append('<li class="list-group-item link-class"><img src="'+v.image+'" height="40" width="40" class="img-thumbnail" /> '+v.name+' | <span class="text-muted">'+v.location+'</span></li>');
-    }
-   });   
-  });
- });
+
+  $.getJSON('./data/inits.json')
+    .done((data) => {
+      console.log(data); // Log the full JSON data for reference
+
+      $.each(data, (k, v) => {
+        // Explicitly convert key and value to strings
+        let keyString = String(k);
+        let valueString = typeof v === 'string' ? v : JSON.stringify(v);
+
+        // Debug log to check if keys and values are parsed correctly
+        console.log("Key:", keyString, " | Value:", valueString);
+
+        // Check if either the key or value contains the search term
+        if (keyString.search(expression) !== -1 || valueString.search(expression) !== -1) {
+          $('article').append('<li class="list-group-item link-class"><h2>' + keyString + '</h2> | <span class="text-muted">' + valueString + '</span></li>');
+        }
+      });
+    })
+    .fail((jqXHR, textStatus, errorThrown) => {
+      console.error('Error loading JSON:', textStatus, errorThrown);
+    });
+});
+
+
  
  $('article').on('click', 'li', (i,el) => {
   var click_text = $(el).text().split('|');
